@@ -68,6 +68,7 @@ type addressPool struct {
 	AvoidBuggyIPs     bool               `yaml:"avoid-buggy-ips"`
 	AutoAssign        *bool              `yaml:"auto-assign"`
 	BGPAdvertisements []bgpAdvertisement `yaml:"bgp-advertisements"`
+	NameSpaces        string[]
 }
 
 type bgpAdvertisement struct {
@@ -137,6 +138,8 @@ type Pool struct {
 	// When an IP is allocated from this pool, how should it be
 	// translated into BGP announcements?
 	BGPAdvertisements []*BGPAdvertisement
+	// Uses this pool for selected namespaces, leave empty for all
+	NameSpaces []string
 }
 
 // BGPAdvertisement describes one translation from an IP address to a BGP advertisement.
@@ -329,6 +332,7 @@ func parseAddressPool(p addressPool, bgpCommunities map[string]uint32) (*Pool, e
 		Protocol:      p.Protocol,
 		AvoidBuggyIPs: p.AvoidBuggyIPs,
 		AutoAssign:    true,
+		NameSpaces:    p.NameSpaces
 	}
 
 	if p.AutoAssign != nil {
