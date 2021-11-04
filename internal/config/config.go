@@ -68,7 +68,7 @@ type addressPool struct {
 	AvoidBuggyIPs     bool               `yaml:"avoid-buggy-ips"`
 	AutoAssign        *bool              `yaml:"auto-assign"`
 	BGPAdvertisements []bgpAdvertisement `yaml:"bgp-advertisements"`
-	Namespaces        string[]
+	Namespaces        []string
 }
 
 type bgpAdvertisement struct {
