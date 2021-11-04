@@ -332,7 +332,7 @@ func parseAddressPool(p addressPool, bgpCommunities map[string]uint32) (*Pool, e
 		Protocol:      p.Protocol,
 		AvoidBuggyIPs: p.AvoidBuggyIPs,
 		AutoAssign:    true,
-		Namespaces:    p.Namespaces
+		Namespaces:    p.Namespaces,
 	}
 
 	if p.AutoAssign != nil {
