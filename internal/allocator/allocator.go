@@ -266,25 +266,22 @@ func (a *Allocator) AllocateFromPool(svc string, isIPv6 bool, poolName string, p
 
 // Allocate assigns any available and assignable IP to service.
 func (a *Allocator) Allocate(svc string, isIPv6 bool, ports []Port, sharingKey, backendKey string) (net.IP, error) {
-	var svcNamespaceExists bool
-	
 	if alloc := a.allocated[svc]; alloc != nil {
 		if err := a.Assign(svc, alloc.ip, ports, sharingKey, backendKey); err != nil {
 			return nil, err
 		}
 		return alloc.ip, nil
 	}
-	
+	namespaceExists := false
 	for poolName := range a.pools {
 		if !a.pools[poolName].AutoAssign {
 			continue
 		}
-		
-		if len(a.pools[poolName].NameSpaces) > 0 {
-			svcNamespaceExists = false
-			for i := 0; i < len(a.pools[poolName].NameSpaces); i++ {
-				if strings.Split(svc, "/")[0] == a.pools[poolName].NameSpaces[i] {
-					svcNamespaceExists = true
+		if len(a.pools[poolName].Namespaces) > 0 {
+			namespaceExists = false
+			for i := 0; i < len(a.pools[poolName].Namespaces); i++ {
+				if strings.Split(svc, "/")[0] == a.pools[poolName].Namespaces[i] {
+					namespaceExists = true
 				}
 			}
 			if !svcNamespaceExists {
