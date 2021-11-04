@@ -284,7 +284,7 @@ func (a *Allocator) Allocate(svc string, isIPv6 bool, ports []Port, sharingKey, 
 					namespaceExists = true
 				}
 			}
-			if !svcNamespaceExists {
+			if !namespaceExists {
 				continue
 			}
 		}
